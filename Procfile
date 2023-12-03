@@ -1,1 +1,1 @@
-web: ./astora.exe
+web: go run main.go
