@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"gorm.io/driver/postgres"
-
 	"gorm.io/gorm"
 )
 
@@ -16,6 +15,18 @@ func DBInit() {
 	if err != nil {
 		panic(err)
 	}
+
+	// Set up connection pooling
+	sqlDB, err := db.DB()
+	if err != nil {
+		panic("Failed to set up connection pooling")
+	}
+
+	// Set the maximum number of idle connections in the pool
+	sqlDB.SetMaxIdleConns(10)
+
+	// Set the maximum number of open connections (both idle and in-use) in the pool
+	sqlDB.SetMaxOpenConns(100)
 
 	DB = db
 }
