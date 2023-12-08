@@ -17,9 +17,13 @@ func init() {
 
 func main() {
 	router := gin.Default()
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"*"} // Allow any origin
-	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+	config := cors.Config{
+		AllowOrigins:     []string{"*"}, // Allow any origin
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}
 	router.Use(cors.New(config))
 	router.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
